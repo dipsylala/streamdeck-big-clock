@@ -1,0 +1,143 @@
+/* StreamDeck Property Inspector CSS */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 12px;
+    color: #d1d1d1;
+    background-color: #2d2d30;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.sdpi-wrapper {
+    padding: 16px;
+    max-width: 100%;
+}
+
+.sdpi-heading {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #464647;
+}
+
+.sdpi-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    min-height: 32px;
+}
+
+.sdpi-item-label {
+    flex: 1;
+    font-size: 12px;
+    color: #d1d1d1;
+    padding-right: 12px;
+    min-width: 100px;
+}
+
+.sdpi-item-value {
+    flex: 1;
+    max-width: 200px;
+}
+
+/* Form Controls */
+select, input[type="color"], input[type="range"] {
+    background-color: #3c3c3c;
+    border: 1px solid #464647;
+    border-radius: 4px;
+    color: #d1d1d1;
+    font-size: 12px;
+    padding: 6px 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: #007acc;
+    box-shadow: 0 0 0 1px #007acc;
+}
+
+select {
+    cursor: pointer;
+}
+
+/* Color inputs */
+input[type="color"] {
+    padding: 2px;
+    height: 32px;
+    cursor: pointer;
+}
+
+/* Range inputs */
+input[type="range"] {
+    -webkit-appearance: none;
+    height: 4px;
+    background: #464647;
+    border: none;
+    padding: 0;
+    margin-right: 8px;
+    flex: 1;
+    max-width: 140px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #007acc;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #007acc;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    box-sizing: border-box;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Range value display */
+#fontSizeValue {
+    color: #d1d1d1;
+    font-size: 12px;
+    min-width: 30px;
+    text-align: right;
+}
+
+/* Special styling for range slider container */
+.sdpi-item:has(#fontSize) {
+    align-items: center;
+}
+
+.sdpi-item:has(#fontSize) .sdpi-item-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Hover effects */
+select:hover, input:hover {
+    border-color: #007acc;
+}
+
+/* Option styling for select elements */
+option {
+    background-color: #3c3c3c;
+    color: #d1d1d1;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Time Component Settings</title>
+    <script src="sdpi-components.js"></script>
+    <link rel="stylesheet" href="time-component.css">
+</head>
+<body>
+    <sdpi-item label="Component">
+        <sdpi-select setting="component" default="hour1">
+            <option value="hour1">Hour - First Digit</option>
+            <option value="hour2">Hour - Second Digit</option>
+            <option value="fullHour">Full Hour (HH)</option>
+            <option value="colon1">Colon (:) - Hours/Minutes</option>
+            <option value="minute1">Minute - First Digit</option>
+            <option value="minute2">Minute - Second Digit</option>
+            <option value="fullMinute">Full Minute (MM)</option>
+            <option value="colon2">Colon (:) - Minutes/Seconds</option>
+            <option value="second1">Second - First Digit</option>
+            <option value="second2">Second - Second Digit</option>
+            <option value="fullSecond">Full Second (SS)</option>
+        </sdpi-select>
+    </sdpi-item>
+
+    <sdpi-item label="Time Format">
+        <sdpi-select setting="format24Hour" default="false">
+            <option value="false">12-Hour</option>
+            <option value="true">24-Hour</option>
+        </sdpi-select>
+    </sdpi-item>
+
+    <sdpi-item label="Blink Colons">
+        <sdpi-checkbox setting="blinkColons" default></sdpi-checkbox>
+    </sdpi-item>
+
+    <sdpi-item label="Text Color">
+        <sdpi-color setting="textColor" default="#FFFFFF"></sdpi-color>
+    </sdpi-item>
+
+    <sdpi-item label="Background Color">
+        <sdpi-color setting="backgroundColor" default="#000000"></sdpi-color>
+    </sdpi-item>
+
+    <sdpi-item label="Font Size">
+        <sdpi-range setting="fontSize" min="20" max="144" default="96"></sdpi-range>
+    </sdpi-item>
+
+    <sdpi-item label="Font Family">
+        <sdpi-select setting="fontFamily" default="Arial">
+            <option value="Arial">Arial</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Verdana">Verdana</option>
+        </sdpi-select>
+    </sdpi-item>
+</body>
+</html>

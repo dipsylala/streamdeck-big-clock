@@ -1,0 +1,47 @@
+{
+	"Name": "BigTime",
+	"Version": "1.0.0.0",
+	"Author": "Dipsylala",
+	"Actions": [
+		{
+			"Name": "Time Component",
+			"UUID": "com.github.dipsylala.big-clock.time-component",
+			"Icon": "imgs/actions/time-component/icon",
+			"Tooltip": "Display time component (digit or separator)",
+			"PropertyInspectorPath": "ui/time-component.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/time-component/key",
+					"TitleAlignment": "middle"
+				}
+			]
+		}
+	],
+	"Category": "BigTime",
+	"CategoryIcon": "imgs/plugin/category-icon",
+	"CodePath": "bin/plugin.js",
+	"Description": "Send time components to StreamDeck buttons with configurable HH:MM:SS mapping",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 2,
+	"Software": {
+		"MinimumVersion": "6.5"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "com.github.dipsylala.big-clock"
+}

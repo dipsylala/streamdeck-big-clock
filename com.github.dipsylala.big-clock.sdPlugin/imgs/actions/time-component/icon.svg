@@ -1,0 +1,6 @@
+<svg width="144" height="144" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg">
+    <rect width="144" height="144" fill="#2d2d30" rx="20"/>
+    <text x="72" y="50" text-anchor="middle" fill="#007acc" font-family="Arial" font-size="24" font-weight="bold">TIME</text>
+    <text x="72" y="80" text-anchor="middle" fill="#cccccc" font-family="Courier New" font-size="20">00</text>
+    <text x="72" y="110" text-anchor="middle" fill="#999999" font-family="Arial" font-size="12">BigTime</text>
+</svg>
