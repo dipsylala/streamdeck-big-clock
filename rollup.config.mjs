@@ -6,6 +6,7 @@ import path from "node:path";
 import url from "node:url";
 
 const isWatching = !!process.env.ROLLUP_WATCH;
+const isProduction = process.env.NODE_ENV === "production";
 const sdPlugin = "com.github.dipsylala.big-clock.sdPlugin";
 
 /**
@@ -15,7 +16,7 @@ const config = {
 	input: "src/plugin.ts",
 	output: {
 		file: `${sdPlugin}/bin/plugin.js`,
-		sourcemap: isWatching,
+		sourcemap: isWatching && !isProduction,
 		sourcemapPathTransform: (relativeSourcePath, sourcemapPath) => {
 			return url.pathToFileURL(path.resolve(path.dirname(sourcemapPath), relativeSourcePath)).href;
 		}
@@ -28,7 +29,7 @@ const config = {
 			},
 		},
 		typescript({
-			mapRoot: isWatching ? "./" : undefined
+			mapRoot: isWatching && !isProduction ? "./" : undefined
 		}),
 		nodeResolve({
 			browser: false,
@@ -36,7 +37,7 @@ const config = {
 			preferBuiltins: true
 		}),
 		commonjs(),
-		!isWatching && terser(),
+		(!isWatching || isProduction) && terser(),
 		{
 			name: "emit-module-package-file",
 			generateBundle() {
