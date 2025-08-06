@@ -82,12 +82,67 @@ npm install
 npm run build
 ```
 
-### Development with Hot Reload
+### Development Setup
+
+#### First Time Setup
+After building the plugin, you need to link it to StreamDeck:
+```bash
+# Link the plugin to StreamDeck (first time only)
+npx streamdeck link "com.github.dipsylala.big-clock.sdPlugin"
+```
+
+#### Development with Hot Reload
 ```bash
 npm run watch
 ```
 
 The watch command will automatically rebuild the plugin and restart it in StreamDeck when files change.
+
+#### Useful Development Commands
+```bash
+# Check if plugin is linked
+npx streamdeck list
+
+# Manually restart the plugin
+npx streamdeck restart com.github.dipsylala.big-clock
+
+# Complete plugin refresh (if experiencing issues)
+npx streamdeck stop com.github.dipsylala.big-clock
+npx streamdeck unlink com.github.dipsylala.big-clock
+npx streamdeck link "com.github.dipsylala.big-clock.sdPlugin"
+
+# Unlink the plugin (if needed)
+npx streamdeck unlink com.github.dipsylala.big-clock
+
+# Enable developer mode (shows debug info)
+npx streamdeck dev
+
+# Validate plugin structure
+npx streamdeck validate
+```
+
+#### Troubleshooting
+If you experience display flashing when moving buttons:
+1. **Complete plugin refresh**: Stop, unlink, and relink the plugin (see commands above)
+2. **Check for multiple instances**: Ensure only one instance of each time component is active
+3. **Restart StreamDeck software**: Close and reopen the StreamDeck application if issues persist
+4. **Clear browser cache**: If using property inspector, clear browser cache in StreamDeck settings
+5. **Enable developer mode**: Run `npx streamdeck dev` to see detailed debug logs in StreamDeck console
+
+#### Advanced Troubleshooting
+For persistent multiple timer issues:
+```bash
+# Nuclear option: Complete reset
+npx streamdeck stop com.github.dipsylala.big-clock
+npx streamdeck unlink com.github.dipsylala.big-clock
+# Close and reopen StreamDeck software completely
+npx streamdeck link "com.github.dipsylala.big-clock.sdPlugin"
+```
+
+#### Development Workflow
+1. **First time setup**: `npx streamdeck link "com.github.dipsylala.big-clock.sdPlugin"`
+2. **Development**: `npm run watch` (builds and auto-restarts on changes)
+3. **Manual restart**: `npx streamdeck restart com.github.dipsylala.big-clock` (if needed)
 
 ### Project Structure
 ```

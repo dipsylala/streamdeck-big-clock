@@ -6,10 +6,8 @@ import streamDeck from "@elgato/streamdeck";
  */
 @action({ UUID: "com.github.dipsylala.big-clock.time-component" })
 export class TimeComponent extends SingletonAction<TimeComponentSettings> {
-	private intervals = new Map<string, NodeJS.Timeout>();
 	private static globalTimer: NodeJS.Timeout | null = null;
-	private static activeActions = new Map<any, TimeComponentSettings>(); // Cache settings with actions
-	private static isSettingUpTimer = false;
+	private static activeActions = new Map<string, { action: any, settings: TimeComponentSettings }>();
 
 	/**
 	 * Called when the action becomes visible. Sets up the timer and initial display.
@@ -27,47 +25,32 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 		// Save the updated settings
 		await ev.action.setSettings(settings);
 
+		// Add this action to the global set with its settings using action ID as key
+		const actionKey = ev.action.id;
+		TimeComponent.activeActions.set(actionKey, { action: ev.action, settings });
+		streamDeck.logger.info(`Action added with key ${actionKey}, ${TimeComponent.activeActions.size} total actions`);
+
 		// Update the display immediately
 		await this.updateDisplay(ev.action, settings);
 
-		// Add this action to the global set with its settings
-		TimeComponent.activeActions.set(ev.action, settings);
-		streamDeck.logger.info(`Action added, ${TimeComponent.activeActions.size} total actions`);
-
 		// Set up global synchronized timer if not already running
 		this.setupGlobalTimer();
-
-		// If timer seems to have stopped, restart it after a delay
-		setTimeout(() => {
-			if (TimeComponent.activeActions.size > 0 && !TimeComponent.globalTimer && !TimeComponent.isSettingUpTimer) {
-				streamDeck.logger.info('Timer was missing - restarting');
-				this.setupGlobalTimer();
-			}
-		}, 2000); // Check after 2 seconds
 	}
 
 	/**
 	 * Called when the action becomes invisible. Cleans up the timer.
 	 */
 	override onWillDisappear(ev: WillDisappearEvent<TimeComponentSettings>): void {
-		// Remove this action from the global set
-		TimeComponent.activeActions.delete(ev.action);
-		streamDeck.logger.info(`Action removed, ${TimeComponent.activeActions.size} actions remaining`);
+		// Remove this action from the global set using action ID as key
+		const actionKey = ev.action.id;
+		const wasRemoved = TimeComponent.activeActions.delete(actionKey);
+		streamDeck.logger.info(`Action ${wasRemoved ? 'removed' : 'not found'} with key ${actionKey}, ${TimeComponent.activeActions.size} actions remaining`);
 
-		// Use a longer delay before cleaning up the global timer to handle button moves/recreations
-		setTimeout(() => {
-			if (TimeComponent.activeActions.size === 0 && TimeComponent.globalTimer) {
-				streamDeck.logger.info('Cleaning up global timer - no active actions');
-				clearInterval(TimeComponent.globalTimer);
-				TimeComponent.globalTimer = null;
-				TimeComponent.isSettingUpTimer = false;
-			}
-		}, 2000); // 2 second delay to handle button moves/recreations
-
-		const interval = this.intervals.get(ev.action.id);
-		if (interval) {
-			clearInterval(interval);
-			this.intervals.delete(ev.action.id);
+		// Clean up timer if no actions remain
+		if (TimeComponent.activeActions.size === 0 && TimeComponent.globalTimer) {
+			streamDeck.logger.info('Cleaning up global timer - no active actions');
+			clearInterval(TimeComponent.globalTimer);
+			TimeComponent.globalTimer = null;
 		}
 	}
 
@@ -75,66 +58,64 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 	 * Sets up a single global timer that updates all active actions synchronously
 	 */
 	private setupGlobalTimer(): void {
-		// Use a flag to prevent multiple simultaneous setups
-		if (TimeComponent.globalTimer !== null || TimeComponent.isSettingUpTimer) {
-			streamDeck.logger.info('Global timer already exists or is being set up, skipping');
+		// Don't create multiple timers
+		if (TimeComponent.globalTimer !== null) {
+			streamDeck.logger.info('Global timer already exists, skipping');
 			return;
 		}
 
-		TimeComponent.isSettingUpTimer = true;
 		streamDeck.logger.info(`Setting up global timer for ${TimeComponent.activeActions.size} actions`);
 
-		const now = new Date();
-		const msUntilNextSecond = 1000 - now.getMilliseconds();
+		// Set up interval that runs every second
+		let lastSecond = -1;
 		
-		// Wait until the next full second, then start regular interval
-		setTimeout(() => {
-			// Double-check that no timer was created while we were waiting
-			if (TimeComponent.globalTimer !== null) {
-				streamDeck.logger.info('Timer was created while waiting, aborting setup');
-				TimeComponent.isSettingUpTimer = false;
+		TimeComponent.globalTimer = setInterval(async () => {
+			const currentTime = new Date();
+			const currentSecond = currentTime.getSeconds();
+			
+			// Only update when seconds actually change
+			if (currentSecond === lastSecond) {
 				return;
 			}
-
-			// Set up interval that runs every 100ms for smooth colon blinking
-			// but only update non-colon components every second
-			let lastSecond = -1;
 			
-			TimeComponent.globalTimer = setInterval(async () => {
-				const currentTime = new Date();
-				const currentSecond = currentTime.getSeconds();
-				const currentMillisecond = currentTime.getMilliseconds();
-				const shouldUpdateAll = currentSecond !== lastSecond;
-				
-				// Don't clean up timer from within the timer callback - this can cause race conditions
-				// Timer cleanup is handled in onWillDisappear with a delay
-				if (TimeComponent.activeActions.size === 0) {
-					// Just skip this update cycle, don't clean up timer
-					return;
+			// Skip if no actions
+			if (TimeComponent.activeActions.size === 0) {
+				streamDeck.logger.info('No active actions, cleaning up timer');
+				if (TimeComponent.globalTimer) {
+					clearInterval(TimeComponent.globalTimer);
+					TimeComponent.globalTimer = null;
 				}
-				
-				// Update all active actions at the same time using cached settings
-				for (const [action, settings] of TimeComponent.activeActions) {
-					try {
-						// Update colons every 100ms for smooth blinking, others only when seconds change
-						const isColon = settings.component === 'colon1' || settings.component === 'colon2';
-						
-						if (shouldUpdateAll || (isColon && settings.blinkColons)) {
-							await this.updateDisplay(action, settings);
-						}
-					} catch (error) {
-						streamDeck.logger.error('Error updating action:', error);
-					}
-				}
-				
-				if (shouldUpdateAll) {
-					lastSecond = currentSecond;
-				}
-			}, 100); // Update every 100ms for smooth colon animation
+				return;
+			}
 			
-			TimeComponent.isSettingUpTimer = false;
-			streamDeck.logger.info('Global timer started successfully');
-		}, msUntilNextSecond);
+			streamDeck.logger.info(`Timer tick: updating ${TimeComponent.activeActions.size} actions`);
+			
+			// Update all active actions at the same time
+			// Get fresh settings from each action instead of using cache
+			for (const [actionKey, actionData] of TimeComponent.activeActions) {
+				try {
+					// Get the latest settings from the action (this ensures we have the most recent settings)
+					const currentSettings = await actionData.action.getSettings();
+					
+					// Merge with cached settings to ensure we have all defaults
+					const settings = { ...actionData.settings, ...currentSettings };
+					
+					// Update the cache with the latest settings
+					TimeComponent.activeActions.set(actionKey, { action: actionData.action, settings });
+					
+					// Update the display
+					await this.updateDisplay(actionData.action, settings);
+				} catch (error) {
+					streamDeck.logger.error('Error updating action:', error);
+					// Remove problematic action to prevent repeated errors
+					TimeComponent.activeActions.delete(actionKey);
+				}
+			}
+			
+			lastSecond = currentSecond;
+		}, 1000); // Update every second
+		
+		streamDeck.logger.info('Global timer started successfully');
 	}
 
 	/**
@@ -242,12 +223,12 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 				return secondsStr[1];
 			case "colon1":
 			case "colon2":
-				// Blink the colon every second, showing for first 500ms of each second
+				// Blink the colon every second - show for first 500ms, hide for last 500ms
 				if (!blinkColons) {
 					return ":";
 				}
-				const milliseconds = date.getMilliseconds();
-				return milliseconds < 500 ? ":" : " ";
+				// Use seconds instead of milliseconds for more predictable blinking
+				return (seconds % 2 === 0) ? ":" : " ";
 			case "fullHour":
 				return hoursStr;
 			case "fullMinute":
@@ -270,18 +251,18 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 	 * Called when settings are updated from the property inspector.
 	 */
 	override async onDidReceiveSettings(ev: DidReceiveSettingsEvent<TimeComponentSettings>): Promise<void> {
-		streamDeck.logger.info('Plugin: onDidReceiveSettings called', ev.payload.settings);
+		streamDeck.logger.info('Plugin: onDidReceiveSettings called with:', ev.payload.settings);
 		
-		// Update cached settings immediately
-		TimeComponent.activeActions.set(ev.action, ev.payload.settings);
+		// Update cached settings immediately using action ID as key
+		const actionKey = ev.action.id;
+		const oldActionData = TimeComponent.activeActions.get(actionKey);
+		const newActionData = { action: ev.action, settings: ev.payload.settings };
+		TimeComponent.activeActions.set(actionKey, newActionData);
 		
-		// Force immediate display update to clear any stale state
+		streamDeck.logger.info('Settings updated from:', oldActionData?.settings, 'to:', ev.payload.settings);
+		
+		// Force immediate display update with new settings
 		await this.updateDisplay(ev.action, ev.payload.settings);
-		
-		// Also trigger a second update after a brief delay to ensure consistency
-		setTimeout(async () => {
-			await this.updateDisplay(ev.action, ev.payload.settings);
-		}, 50);
 	}
 
 	/**
@@ -291,16 +272,12 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 		streamDeck.logger.info('Plugin: onSendToPlugin called', ev.payload);
 		// Handle immediate updates from property inspector
 		if (ev.payload) {
-			// Update cached settings immediately
-			TimeComponent.activeActions.set(ev.action, ev.payload);
+			// Update cached settings immediately using action ID as key
+			const actionKey = ev.action.id;
+			TimeComponent.activeActions.set(actionKey, { action: ev.action, settings: ev.payload });
 			
-			// Force immediate display update
+			// Single immediate display update (remove the double update that was causing flashing)
 			await this.updateDisplay(ev.action, ev.payload);
-			
-			// Also trigger a second update after a brief delay to ensure consistency
-			setTimeout(async () => {
-				await this.updateDisplay(ev.action, ev.payload);
-			}, 50);
 		}
 	}
 }
