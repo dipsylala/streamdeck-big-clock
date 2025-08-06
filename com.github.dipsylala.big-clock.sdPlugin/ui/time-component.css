@@ -8,3 +8,31 @@ body {
     padding: 0;
     overflow-x: hidden;
 }
+
+/* Font size container styles */
+.font-size-container {
+    position: relative;
+    padding-top: 20px; /* Make room for the current value display */
+}
+
+.font-size-current-display {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Match SDPI label styling */
+    color: #969696;
+    font-family: var(--font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-size: 9pt;
+    font-weight: normal;
+    text-align: center;
+    line-height: 1.4;
+    
+    /* Subtle background for better visibility */
+    background: rgba(61, 61, 64, 0.3);
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid rgba(150, 150, 150, 0.1);
+    min-width: 35px;
+}
