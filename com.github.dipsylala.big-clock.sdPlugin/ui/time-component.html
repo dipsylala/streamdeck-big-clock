@@ -79,7 +79,7 @@
                 if (fontSizeSlider) {
                     const inputElement = fontSizeSlider.shadowRoot?.querySelector('input[type="range"]');
                     if (inputElement) {
-                        return inputElement.value || inputElement.getAttribute('value') || 
+                        return inputElement.value || inputElement.title || inputElement.getAttribute('value') || 
                                fontSizeSlider.getAttribute('value') || fontSizeSlider.getAttribute('default') || '96';
                     }
                     return fontSizeSlider.getAttribute('value') || fontSizeSlider.getAttribute('default') || '96';
@@ -87,62 +87,27 @@
                 return '96';
             }
             
-            // Function to setup event listeners on the shadow DOM input
-            function setupInputListeners() {
-                if (fontSizeSlider) {
-                    const inputElement = fontSizeSlider.shadowRoot?.querySelector('input[type="range"]');
-                    
-                    if (inputElement) {
-                        console.log('**** Found shadow DOM input element, setting up listeners');
-                        
-                        // Listen for input events on the actual input element (real-time while dragging)
-                        inputElement.addEventListener('input', function(e) {
-                            updateCurrentDisplay(e.target.value);
-                        });
-                        
-                        // Listen for change events on the actual input element (when dragging ends)
-                        inputElement.addEventListener('change', function(e) {
-                            updateCurrentDisplay(e.target.value);
-                        });
-                        
-                        // Update display with current value
-                        updateCurrentDisplay(getCurrentValue());
-                        return true;
-                    }
-                }
-                return false;
-            }
-            
             if (fontSizeSlider) {
-                console.log('**** Font size slider found, looking for child input element');
+                const inputElement = fontSizeSlider.shadowRoot?.querySelector('input[type="range"]');
                 
-                // Try to setup listeners immediately
-                if (!setupInputListeners()) {
-                    // If shadow DOM isn't ready, try again after a delay
-                    setTimeout(() => {
-                        if (!setupInputListeners()) {
-                            setTimeout(() => setupInputListeners(), 500);
-                        }
-                    }, 100);
+                if (inputElement) {
+                    console.log('**** Found shadow DOM input element, setting up listeners');
+                    
+                    // Listen for input events on the actual input element (real-time while dragging)
+                    inputElement.addEventListener('input', function(e) {
+                        updateCurrentDisplay(e.target.value);
+                    });
+                    
+                    // Listen for change events on the actual input element (when dragging ends)
+                    inputElement.addEventListener('change', function(e) {
+                        updateCurrentDisplay(e.target.value);
+                    });
+                    
+                    // Update display with current value
+                    updateCurrentDisplay(inputElement.value || inputElement.title || inputElement.getAttribute('value') || 
+                               fontSizeSlider.getAttribute('value') || fontSizeSlider.getAttribute('default') || '96');
+                    return true;
                 }
-                
-                // Listen for settings updates that might change the slider value
-                document.addEventListener('settingsReceived', function(event) {
-                    console.log('**** Settings received, updating display');
-                    const settings = event.detail;
-                    if (settings && settings.fontSize !== undefined) {
-                        updateCurrentDisplay(settings.fontSize);
-                    } else {
-                        // Fallback to checking the current value
-                        updateCurrentDisplay(getCurrentValue());
-                    }
-                });
-                
-                observer.observe(fontSizeSlider, {
-                    attributes: true,
-                    attributeFilter: ['value']
-                });
-                
             } else {
                 console.log('**** Font size slider not found');
             }
