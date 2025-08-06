@@ -16,8 +16,8 @@
         "watch": "rollup -c -w --watch.onEnd=\"streamdeck restart com.github.dipsylala.big-clock\"",
         "dist": "npm run clean && npm run build:dist",
         "package": "npm run dist && npm run zip && npm run streamdeck",
-        "zip": "powershell -NoProfile \"if (-not (Test-Path 'dist')) { New-Item -ItemType Directory -Path 'dist' -Force | Out-Null }; Compress-Archive -Path 'com.github.dipsylala.big-clock.sdPlugin' -DestinationPath 'dist/big-clock-plugin-v1.0.0.zip' -Force\"",
-        "streamdeck": "powershell -NoProfile Copy-Item 'dist/big-clock-plugin-v1.0.0.zip' 'dist/com.github.dipsylala.big-clock.streamDeckPlugin'",
+        "zip": "powershell -NoProfile \"if (-not (Test-Path 'dist')) { New-Item -ItemType Directory -Path 'dist' -Force | Out-Null }; Compress-Archive -Path 'com.github.dipsylala.big-clock.sdPlugin' -DestinationPath 'dist/big-clock-plugin-v1.1.0.zip' -Force\"",
+        "streamdeck": "powershell -NoProfile Copy-Item 'dist/big-clock-plugin-v1.1.0.zip' 'dist/com.github.dipsylala.big-clock.streamDeckPlugin'",
         "release": "npm run package && echo 'Release files created in dist/ folder'"
     },
     "type": "module",

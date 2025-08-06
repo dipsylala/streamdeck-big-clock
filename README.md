@@ -235,13 +235,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Changelog
 
-### v1.0.1 (Current)
+### v1.1.0 (Current)
 - ✅ **NEW: AM/PM Indicators** - Added three new time component options:
   - AM/PM - Shows current time period indicator (AM or PM)
-  - AM Only - Shows "AM" only during morning hours, blank during PM hours
-  - PM Only - Shows "PM" only during afternoon/evening hours, blank during AM hours
-- ✅ Smart 24-hour format handling - AM/PM indicators automatically hidden in 24-hour format
-- ✅ Enhanced layout flexibility for 12-hour format displays
 
 ### v1.0.0
 - ✅ Individual time component display with full customization
