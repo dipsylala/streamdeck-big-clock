@@ -2,6 +2,10 @@
 
 A StreamDeck plugin that displays individual time components (hours, minutes, seconds, colons) on separate buttons, allowing you to create custom large digital clock layouts on your Stream Deck with perfect synchronization and smooth animations.
 
+This was a coding exercise based on Reddit thread https://www.reddit.com/r/elgato/comments/1mi0s6z/finally_got_the_time_separated_by_digit_onto/
+
+Total kudos to https://www.reddit.com/user/mathewharwich/ for the idea.
+
 ## Features
 
 ![Examples of how to use the plugin](img/examples.png)
@@ -25,11 +29,19 @@ Display individual components of the current time that update in real-time with 
 - **Separators**: Show colon separators with smooth blinking animation
   - Colon (:) - Blinking separator between minutes and seconds
 
+- **AM/PM Indicators**: Show time period indicators (only for 12-hour format)
+  - AM/PM - Shows "AM" or "PM" based on current time
+  - AM Only - Shows "AM" only during morning hours (00:00-11:59), blank during PM
+  - PM Only - Shows "PM" only during afternoon/evening hours (12:00-23:59), blank during AM
+
 ### Customization Options
-- **Time Component**: Select which part of the time to display from dropdown
-- **Time Format**: Choose between 12-hour and 24-hour format
+- **Time Component**: Select which part of the time to display from dropdown (including AM/PM options)
+- **Time Format**: Choose between 12-hour and 24-hour format (AM/PM indicators only show in 12-hour format)
 - **Colon Blinking**: Enable/disable smooth colon blinking animation (500ms intervals)
-- **Text Color**: Customize the color of digits and colons with color picker
+- **Text Color**: Customize the color of digits, colons, and AM/PM indicators with color picker
+- **Background Color**: Customize the button background color with color picker
+- **Font Size**: Adjust text size with slider (20-144px range, default: 96px)
+- **Font Family**: Choose from multiple font options (Arial, Helvetica, Georgia, etc.) color picker
 - **Background Color**: Customize the button background color with color picker
 - **Font Size**: Adjust text size with slider (20-144px range, default: 96px)
 - **Font Family**: Choose from multiple font options (Arial, Helvetica, Georgia, etc.)
@@ -45,13 +57,28 @@ Display individual components of the current time that update in real-time with 
 
 ## Example Usage
 
-To create a large digital clock display across 8 Stream Deck buttons, arrange them in a 8x1 grid and configure each button as follows:
+To create a large digital clock display across multiple Stream Deck buttons, you can arrange them in various layouts:
 
+### Basic 8-Button Layout (HH:MM:SS)
+Arrange buttons in a 7x1 grid:
 ```
 [1] [2] [:] [3] [4] [:] [5] [6]
 ```
 
-Where:
+### Extended 9-Button Layout with AM/PM (12-hour format)
+Arrange buttons in a 8x1 grid:
+```
+[1] [2] [:] [3] [4] [:] [5] [6] [AM/PM]
+```
+
+### Dual-Row Compact Layout
+Arrange buttons in a 4x2 grid:
+```
+[1] [2] [:] [AM/PM]
+[3] [4] [:] [5] [6]
+```
+
+Where each button is configured as:
 - Button 1: Hour (First Digit)
 - Button 2: Hour (Second Digit)  
 - Button 3: Colon
@@ -60,8 +87,18 @@ Where:
 - Button 6: Colon
 - Button 7: Second (First Digit)
 - Button 8: Second (Second Digit)
+- Button 9 (optional): AM/PM Indicator
 
-This would display something like: `1 2 : 3 4 : 5 6` for the time 12:34:56
+**Example displays:**
+- 12-hour format: `1 2 : 3 4 : 5 6 PM` for 12:34:56 PM
+- 24-hour format: `1 2 : 3 4 : 5 6` for 12:34:56 (no AM/PM needed)
+
+### Advanced Layouts
+
+**Conditional AM/PM Display:**
+- Use "AM Only" button that shows "AM" only during morning hours
+- Use "PM Only" button that shows "PM" only during afternoon/evening hours  
+- Useful for creating layouts where you want separate AM/PM buttons that activate contextually
 
 ## Development
 
@@ -198,7 +235,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Changelog
 
-### v1.0.0 (Current)
+### v1.0.1 (Current)
+- ✅ **NEW: AM/PM Indicators** - Added three new time component options:
+  - AM/PM - Shows current time period indicator (AM or PM)
+  - AM Only - Shows "AM" only during morning hours, blank during PM hours
+  - PM Only - Shows "PM" only during afternoon/evening hours, blank during AM hours
+- ✅ Smart 24-hour format handling - AM/PM indicators automatically hidden in 24-hour format
+- ✅ Enhanced layout flexibility for 12-hour format displays
+
+### v1.0.0
 - ✅ Individual time component display with full customization
 - ✅ Synchronized global timer system for perfect synchronization  
 - ✅ Smooth colon blinking animation (500ms intervals)

@@ -1,6 +1,6 @@
 {
     "name": "streamdeck-big-clock",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "StreamDeck plugin to display configurable time components with individual digits or colons",
     "author": "dipsylala",
     "license": "MIT",

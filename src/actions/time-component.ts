@@ -191,6 +191,9 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 		let hours = date.getHours();
 		const minutes = date.getMinutes();
 		const seconds = date.getSeconds();
+		
+		// Store original hours for AM/PM calculation
+		const originalHours = hours;
 
 		// Convert to 12-hour format if needed
 		if (!format24Hour) {
@@ -232,6 +235,12 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 				return minutesStr;
 			case "fullSecond":
 				return secondsStr;
+			case "ampm":
+				// Show AM/PM based on 24-hour time (only relevant for 12-hour format)
+				if (format24Hour) {
+					return ""; // No AM/PM in 24-hour format
+				}
+				return originalHours < 12 ? "AM" : "PM";
 			default:
 				return "?";
 		}
@@ -305,7 +314,8 @@ type TimeComponentType =
 	| "second1"    // First digit of second
 	| "second2"    // Second digit of second
 	| "fullSecond" // Full second (SS)
-	| "colon";     // Colon separator
+	| "colon"      // Colon separator
+	| "ampm";       // AM/PM indicator
 
 
 
