@@ -1,6 +1,6 @@
 {
     "name": "streamdeck-big-clock",
-    "version": "1.0.1",
+    "version": "1.2.0",
     "description": "StreamDeck plugin to display configurable time components with individual digits or colons",
     "author": "dipsylala",
     "license": "MIT",
@@ -16,8 +16,8 @@
         "watch": "rollup -c -w --watch.onEnd=\"streamdeck restart com.github.dipsylala.big-clock\"",
         "dist": "npm run clean && npm run build:dist",
         "package": "npm run dist && npm run zip && npm run streamdeck",
-        "zip": "powershell -NoProfile \"if (-not (Test-Path 'dist')) { New-Item -ItemType Directory -Path 'dist' -Force | Out-Null }; Compress-Archive -Path 'com.github.dipsylala.big-clock.sdPlugin' -DestinationPath 'dist/big-clock-plugin-v1.0.1.zip' -Force\"",
-        "streamdeck": "powershell -NoProfile Copy-Item 'dist/big-clock-plugin-v1.0.1.zip' 'dist/com.github.dipsylala.big-clock.streamDeckPlugin'",
+        "zip": "powershell -NoProfile \"if (-not (Test-Path 'dist')) { New-Item -ItemType Directory -Path 'dist' -Force | Out-Null }; Compress-Archive -Path 'com.github.dipsylala.big-clock.sdPlugin' -DestinationPath 'dist/big-clock-plugin-v1.2.0.zip' -Force\"",
+        "streamdeck": "powershell -NoProfile Copy-Item 'dist/big-clock-plugin-v1.2.0.zip' 'dist/com.github.dipsylala.big-clock.streamDeckPlugin'",
         "release": "npm run package && echo 'Release files created in dist/ folder'",
         "lint": "eslint --max-warnings 0",
         "lint:fix": "eslint src/**/*.ts --fix"

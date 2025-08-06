@@ -8,7 +8,7 @@ Your StreamDeck Big Clock plugin has been successfully built and packaged for di
 
 | File | Size | Purpose |
 |------|------|---------|
-| **`big-clock-plugin-v1.1.0.zip`** | 226 KB | Standard ZIP archive for manual installation |
+| **`big-clock-plugin-v1.2.0.zip`** | 226 KB | Standard ZIP archive for manual installation |
 | **`com.github.dipsylala.big-clock.streamDeckPlugin`** | 226 KB | **Official StreamDeck plugin file** ⭐ |
 
 ## 🎯 Installation Methods
@@ -19,7 +19,7 @@ Your StreamDeck Big Clock plugin has been successfully built and packaged for di
 3. **Use**: Plugin appears in StreamDeck actions library immediately
 
 ### Method 2: Manual Installation
-1. **Extract**: `big-clock-plugin-v1.1.0.zip`
+1. **Extract**: `big-clock-plugin-v1.2.0.zip`
 2. **Copy**: `com.github.dipsylala.big-clock.sdPlugin` folder to:
    - **Windows**: `%APPDATA%\Elgato\StreamDeck\Plugins`
    - **macOS**: `~/Library/Application Support/com.elgato.StreamDeck/Plugins`
