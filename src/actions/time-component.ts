@@ -221,8 +221,7 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 				return secondsStr[0];
 			case "second2":
 				return secondsStr[1];
-			case "colon1":
-			case "colon2":
+			case "colon":
 				// Blink the colon every second - show for first 500ms, hide for last 500ms
 				if (!blinkColons) {
 					return ":";
@@ -301,12 +300,14 @@ type TimeComponentSettings = {
 type TimeComponentType = 
 	| "hour1"      // First digit of hour
 	| "hour2"      // Second digit of hour
+	| "fullHour"   // Full hour (HH)
 	| "minute1"    // First digit of minute
 	| "minute2"    // Second digit of minute
+	| "fullMinute" // Full minute (MM)
 	| "second1"    // First digit of second
 	| "second2"    // Second digit of second
-	| "colon1"     // Colon separator (between hours and minutes)
-	| "colon2"     // Colon separator (between minutes and seconds)
-	| "fullHour"   // Full hour (HH)
-	| "fullMinute" // Full minute (MM)
-	| "fullSecond"; // Full second (SS)
+	| "fullSecond" // Full second (SS)
+	| "colon";     // Colon separator
+
+
+

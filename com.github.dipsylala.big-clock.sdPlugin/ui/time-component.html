@@ -12,14 +12,13 @@
             <option value="hour1">Hour - First Digit</option>
             <option value="hour2">Hour - Second Digit</option>
             <option value="fullHour">Full Hour (HH)</option>
-            <option value="colon1">Colon (:) - Hours/Minutes</option>
             <option value="minute1">Minute - First Digit</option>
             <option value="minute2">Minute - Second Digit</option>
             <option value="fullMinute">Full Minute (MM)</option>
-            <option value="colon2">Colon (:) - Minutes/Seconds</option>
             <option value="second1">Second - First Digit</option>
             <option value="second2">Second - Second Digit</option>
             <option value="fullSecond">Full Second (SS)</option>
+            <option value="colon">Colon (:)</option>
         </sdpi-select>
     </sdpi-item>
 
@@ -43,7 +42,10 @@
     </sdpi-item>
 
     <sdpi-item label="Font Size">
-        <sdpi-range setting="fontSize" min="20" max="144" default="96"></sdpi-range>
+        <div class="font-size-container">
+            <sdpi-range setting="fontSize" min="20" max="144" default="96" showlabels>
+            </sdpi-range>
+        </div>
     </sdpi-item>
 
     <sdpi-item label="Font Family">
