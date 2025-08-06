@@ -4,6 +4,8 @@ A StreamDeck plugin that displays individual time components (hours, minutes, se
 
 ## Features
 
+![Examples of how to use the plugin](img/examples.png)
+
 ### Time Component Action
 Display individual components of the current time that update in real-time with perfect synchronization across all buttons:
 
@@ -21,8 +23,7 @@ Display individual components of the current time that update in real-time with 
   - Second (Full) - Shows the complete second (e.g., "56" from "12:34:56")
 
 - **Separators**: Show colon separators with smooth blinking animation
-  - Colon (:) Hours/Minutes - Blinking separator between hours and minutes
-  - Colon (:) Minutes/Seconds - Blinking separator between minutes and seconds
+  - Colon (:) - Blinking separator between minutes and seconds
 
 ### Customization Options
 - **Time Component**: Select which part of the time to display from dropdown
