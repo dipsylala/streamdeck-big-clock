@@ -134,8 +134,6 @@ export class TimeComponent extends SingletonAction<TimeComponentSettings> {
 		
 		// Clear the title since we're drawing on canvas
 		await action.setTitle("");
-		
-		streamDeck.logger.info('Plugin: Display updated successfully');
 	}
 
 	/**
