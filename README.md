@@ -54,16 +54,18 @@ Display individual components of the current time that update in real-time with 
 
 To create a large digital clock display across multiple Stream Deck buttons, you can arrange them in various layouts:
 
+However, because you're able to set the layout how you want you could have them however you want, depending on the size of your deck.
+
 ### Basic 8-Button Layout (HH:MM:SS)
-Arrange buttons in a 7x1 grid:
+Arrange buttons in a 8x1 grid:
 ```
 [1] [2] [:] [3] [4] [:] [5] [6]
 ```
 
-### Extended 9-Button Layout with AM/PM (12-hour format)
-Arrange buttons in a 8x1 grid:
+### Extended 6-Button Layout with AM/PM (12-hour format)
+Arrange buttons in a 6x1 line:
 ```
-[1] [2] [:] [3] [4] [:] [5] [6] [AM/PM]
+[1] [2] [:] [3] [4] [AM/PM]
 ```
 
 ### Dual-Row Compact Layout
@@ -73,20 +75,11 @@ Arrange buttons in a 4x2 grid:
 [3] [4] [:] [5] [6]
 ```
 
-Where each button is configured as:
-- Button 1: Hour (First Digit)
-- Button 2: Hour (Second Digit)  
-- Button 3: Colon
-- Button 4: Minute (First Digit)
-- Button 5: Minute (Second Digit)
-- Button 6: Colon
-- Button 7: Second (First Digit)
-- Button 8: Second (Second Digit)
-- Button 9 (optional): AM/PM Indicator
-
-**Example displays:**
-- 12-hour format: `1 2 : 3 4 : 5 6 PM` for 12:34:56 PM
-- 24-hour format: `1 2 : 3 4 : 5 6` for 12:34:56 (no AM/PM needed)
+### Compact Layout
+Arrange buttons in a 2x1 grid, using the Hour(Full) and Minutes (Full)
+```
+[12] [34] 
+```
 
 ## Development
 
