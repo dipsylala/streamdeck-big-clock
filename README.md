@@ -35,7 +35,7 @@ Display individual components of the current time that update in real-time with 
 ### Customization Options
 - **Time Component**: Select which part of the time to display from dropdown (including AM/PM options)
 - **Time Format**: Choose between 12-hour and 24-hour format (AM/PM indicators only show in 12-hour format)
-- **Colon Blinking**: Enable/disable smooth colon blinking animation (500ms intervals)
+- **Colon Blinking**: Enable/disable smooth colon blinking animation (1s intervals)
 - **Text Color**: Customize the color of digits, colons, and AM/PM indicators with color picker
 - **Background Color**: Customize the button background color with color picker
 - **Font Size**: Adjust text size with slider (20-144px range, default: 96px)
@@ -43,7 +43,7 @@ Display individual components of the current time that update in real-time with 
 
 ### Technical Features
 - **Synchronized Timer System**: Single global timer ensures all buttons update simultaneously
-- **Smooth Colon Animation**: Colons blink every 1000ms for authentic digital clock feel
+- **Smooth Colon Animation**: Colons blink every second for authentic digital clock feel
 - **Performance Optimized**: Cached settings system with minimal API calls
 - **Drag & Drop Resilient**: Timer continues running when moving buttons around
 - **SVG Rendering**: Crisp, scalable graphics rendered directly on button canvas
@@ -54,7 +54,7 @@ Display individual components of the current time that update in real-time with 
 
 To create a large digital clock display across multiple Stream Deck buttons, you can arrange them in various layouts:
 
-However, because you're able to set the layout how you want you could have them however you want, depending on the size of your deck.
+However, because you're able to set the layout how you want you could have them anywhere, depending on the size of your deck.
 
 ### Basic 8-Button Layout (HH:MM:SS)
 Arrange buttons in a 8x1 grid:
