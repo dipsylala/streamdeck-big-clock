@@ -27,12 +27,10 @@ Display individual components of the current time that update in real-time with 
   - Second (Full) - Shows the complete second (e.g., "56" from "12:34:56")
 
 - **Separators**: Show colon separators with smooth blinking animation
-  - Colon (:) - Blinking separator between minutes and seconds
+  - Colon (:) - Blinking separator that can be added wherever you want
 
 - **AM/PM Indicators**: Show time period indicators (only for 12-hour format)
   - AM/PM - Shows "AM" or "PM" based on current time
-  - AM Only - Shows "AM" only during morning hours (00:00-11:59), blank during PM
-  - PM Only - Shows "PM" only during afternoon/evening hours (12:00-23:59), blank during AM
 
 ### Customization Options
 - **Time Component**: Select which part of the time to display from dropdown (including AM/PM options)
@@ -41,14 +39,11 @@ Display individual components of the current time that update in real-time with 
 - **Text Color**: Customize the color of digits, colons, and AM/PM indicators with color picker
 - **Background Color**: Customize the button background color with color picker
 - **Font Size**: Adjust text size with slider (20-144px range, default: 96px)
-- **Font Family**: Choose from multiple font options (Arial, Helvetica, Georgia, etc.) color picker
-- **Background Color**: Customize the button background color with color picker
-- **Font Size**: Adjust text size with slider (20-144px range, default: 96px)
 - **Font Family**: Choose from multiple font options (Arial, Helvetica, Georgia, etc.)
 
 ### Technical Features
 - **Synchronized Timer System**: Single global timer ensures all buttons update simultaneously
-- **Smooth Colon Animation**: Colons blink every 500ms for authentic digital clock feel
+- **Smooth Colon Animation**: Colons blink every 1000ms for authentic digital clock feel
 - **Performance Optimized**: Cached settings system with minimal API calls
 - **Drag & Drop Resilient**: Timer continues running when moving buttons around
 - **SVG Rendering**: Crisp, scalable graphics rendered directly on button canvas
@@ -92,13 +87,6 @@ Where each button is configured as:
 **Example displays:**
 - 12-hour format: `1 2 : 3 4 : 5 6 PM` for 12:34:56 PM
 - 24-hour format: `1 2 : 3 4 : 5 6` for 12:34:56 (no AM/PM needed)
-
-### Advanced Layouts
-
-**Conditional AM/PM Display:**
-- Use "AM Only" button that shows "AM" only during morning hours
-- Use "PM Only" button that shows "PM" only during afternoon/evening hours  
-- Useful for creating layouts where you want separate AM/PM buttons that activate contextually
 
 ## Development
 
