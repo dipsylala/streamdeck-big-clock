@@ -216,7 +216,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Changelog
 
-### v1.2.0 (Current)
+### v1.3.0 (Current)
+- ✅ **Icons!** - Preparing for marketplace release and following SDK guidelines
+
+### v1.2.0
 - ✅ **Enhanced Code Quality** - Complete TypeScript and ESLint compliance for production readiness
 - ✅ **Improved Performance** - Optimized class member organization and documentation
 - ✅ **Release Ready** - Zero linting warnings with comprehensive JSDoc documentation
