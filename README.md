@@ -8,7 +8,7 @@ Total kudos to https://www.reddit.com/user/mathewharwich/ for the idea.
 
 ## Features
 
-<video controls src="img/examples.mp4" title="Examples of how to use the plugin"></video>
+![alt text](img/examples.gif)
 
 ### Time Component Action
 Display individual components of the current time that update in real-time with perfect synchronization across all buttons:
